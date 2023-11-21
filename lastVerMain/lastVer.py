@@ -25,10 +25,7 @@ def is_english_word(word):
     # Only kept here to indicate the functionality and for more readability
     word = word.lower()
     english_words = set(words.words())
-    if word in english_words:
-        return True
-    else:
-        return False
+    return word in english_words
 
 
 def calculate_confidence(text, words_left):
@@ -40,10 +37,7 @@ def calculate_confidence(text, words_left):
         total_words = len(words)
         # Calculate the ratio of words left after processing
         words_left_ratio = words_left / total_words
-        # Calculate the confidence as the percentage of words left
-        confidence = words_left_ratio * 100
-        # Return the confidence value
-        return confidence
+        return words_left_ratio * 100
     except:
         return 0
 
@@ -53,7 +47,7 @@ chs = input("Enter 1 to take img through camera\nEnter 2 to give image path\n")
 
 if(chs=="1"):
     pt.captureImage()
-    
+
     # sample_img = "F:/2_studiocode/FinalMainProj/test1/myImages/takenImage.jpg"
     sample_img = "F:/2_studiocode/lastVerMain/myImages/takenImage.jpg"
 else:
@@ -107,24 +101,17 @@ print(hypothesis2)
 
 
 print("[INFO] Checking Confidence")
-words_left0 = len(hypothesis0.split())
-for i in hypothesis0.split():
-    if (is_english_word(i) == False):
-        words_left0-=1
+words_left0 = len(hypothesis0.split()) - sum(
+    1 for i in hypothesis0.split() if (is_english_word(i) == False)
+)
 confidence0 = calculate_confidence(hypothesis0, words_left0)
-# print("Confidence: {:.2f}%".format(confidence0))
-
-words_left1 = len(hypothesis1.split())
-for i in hypothesis1.split():
-    if (is_english_word(i) == False):
-        words_left1-=1
+words_left1 = len(hypothesis1.split()) - sum(
+    1 for i in hypothesis1.split() if (is_english_word(i) == False)
+)
 confidence1 = calculate_confidence(hypothesis1, words_left1)
-# print("Confidence: {:.2f}%".format(confidence1))
-
-words_left2 = len(hypothesis2.split())
-for i in hypothesis2.split():
-    if (is_english_word(i) == False):
-        words_left2-=1
+words_left2 = len(hypothesis2.split()) - sum(
+    1 for i in hypothesis2.split() if (is_english_word(i) == False)
+)
 confidence2 = calculate_confidence(hypothesis2, words_left2)
 # print("Confidence: {:.2f}%".format(confidence2))
 
